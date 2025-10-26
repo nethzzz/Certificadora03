@@ -2,7 +2,13 @@
 
 ## Descrição do Projeto
 
-Este projeto consiste no desenvolvimento de uma API RESTful para um sistema de gerenciamento de usuários, voluntários e apoiadores, com foco em controle seguro de acesso. A aplicação utiliza Node.js, Express, MongoDB, bcrypt, jsonwebtoken e dotenv.  
+Este projeto reúne tanto o backend quanto o frontend para um sistema de gerenciamento de usuários, voluntários e apoiadores.  
+
+O backend consiste em uma API RESTful construída com Node.js, Express, MongoDB, bcrypt, jsonwebtoken e dotenv para controle seguro de acesso, autenticação e autorização.  
+
+O frontend está separado em uma pasta distinta dentro do mesmo repositório, desenvolvido com [translate:Vite] para ser simples e eficiente, consumindo a API do backend.
+
+### Modelos de Dados Backend
 
 O modelo de usuário inclui:  
 ● name (string)  
@@ -70,29 +76,44 @@ O servidor estará rodando em `http://localhost:3000/`.
 
 ---
 
+## Frontend
+
+O frontend para consumir esta API está separado em uma pasta distinta no mesmo repositório, chamada `frontend`.
+
+Para executá-lo:  
+
+- Navegue até o diretório frontend:
+
+cd ../frontend
+
+- Instale as dependências do frontend:
+
+npm install
+
+- Execute a aplicação frontend utilizando **Vite**:
+
+npm run dev
+
+O frontend será iniciado (normalmente em `http://localhost:5173`) e estará pronto para consumir as rotas da API backend.
+
+---
+
 ## Documentação
 
-A documentação da API pode ser acessada via Swagger UI no endpoint `/api-docs/` após iniciar o servidor, apresentando todas as rotas e detalhes de uso.
+A documentação da API está disponível via Swagger UI, acessível em `http://localhost:3000/api-docs` após iniciar o backend, com todas as rotas organizadas por tags para facilitar a navegação.
 
 ---
 
 ## Teste das Rotas
 
-Para testar as rotas, utilize a extensão REST Client no Visual Studio Code:  
-
-- Abra as extensões (Ctrl+Shift+X)  
-- Busque e instale “REST Client” de Huachao Mao  
-- Abra o arquivo `.http` no projeto  
-- Use o botão "Send Request" para cada chamada HTTP
-
-O repositório contém exemplos prontos de arquivos `.http` para facilitar os testes.
+Para testar a API, recomenda-se usar a extensão **REST Client** no Visual Studio Code, que permite enviar requisições HTTP a partir de arquivos `.http` que acompanham o projeto.
 
 ---
 
 ## Segurança e Fluxo de Cadastro
 
-- O cadastro inicial de administrador deve ser feito manualmente direto no banco.  
-- A rota pública de cadastro está desabilitada; apenas admins autenticados podem cadastrar novos usuários via API.  
-- A autenticação e autorização são feitas via token JWT, com verificação do campo `type` para diferenciar administradores e outros perfis.  
+- O cadastro inicial do administrador deve ser feito manualmente na base para garantir controle inicial.  
+- O cadastro via API está restrito a usuários administrativos autenticados.  
+- Autenticação e autorização são feitas com token JWT que carrega a permissão do usuário para controle de acesso seguro.
 
 ---
