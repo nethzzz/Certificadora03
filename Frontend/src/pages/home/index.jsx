@@ -5,38 +5,6 @@ import "./styles.css";
 export default function Home() {
   return (
     <>
-    <header className="ld-header">
-      <div className="ld-container">
-        <a href="#" className="ld-logo" aria-label="Meninas Digitais - Início">
-          <img src="/logo.png" alt="Logo Meninas Digitais" className="ld-logo-image" />
-          <span>Laços Digitais</span>
-        </a>
-
-        <nav className="ld-nav" aria-label="principal">
-          <a href="#como-participar">Como participar?</a>
-          <a href="#quem-somos">Quem Somos</a>
-          <a href="#participantes">Participantes</a>
-          <a href="#apoiadores">Apoiadores</a>
-        </nav>
-
-        <div className="ld-actions">
-          <button className="ld-btn">Cadastre-se</button>
-          <button className="ld-btn">Login</button>
-
-          <button
-            className="ld-burger"
-            aria-label="Abrir menu"
-            aria-expanded="false"
-            onClick={() => document.body.classList.toggle("ld-nav-open")}
-          >
-            <span />
-            <span />
-            <span />
-          </button>
-        </div>
-      </div>
-    </header>
-
     <main>
       <section className="ld-banner">
         <div className="ld-banner-inner">

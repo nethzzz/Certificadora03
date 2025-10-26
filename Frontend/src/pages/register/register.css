@@ -1,0 +1,93 @@
+
+.ld-login-main {
+  display: flex;
+  align-items: flex-start; 
+  justify-content: center;
+  padding: 48px 20px;
+  min-height: calc(100vh - 65px); 
+  background-color: #f9fafb; 
+}
+
+
+.ld-login-card {
+  width: 100%;
+  max-width: 440px; 
+  padding: 28px 32px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--bg);
+  box-shadow: 0 8px 24px rgba(0,0,0,.05);
+}
+
+
+.ld-login-title {
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--text);
+  margin: 0 0 24px;
+  text-align: center;
+}
+
+
+.ld-login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px; 
+}
+
+.ld-form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.ld-form-label {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+
+.ld-login-form .ld-input {
+  flex: none; 
+  width: 100%; 
+}
+
+.ld-form-link {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--brand); 
+  text-decoration: none;
+  text-align: right;
+  margin-top: -8px; 
+}
+.ld-form-link:hover {
+  text-decoration: underline;
+}
+
+.ld-btn-login {
+  width: 100%; 
+  height: 54px; 
+  margin-top: 8px;
+  font-size: 16px;
+}
+
+.ld-form-note {
+  font-size: 15px;
+  color: var(--muted);
+  text-align: center;
+  margin: 20px 0 0;
+}
+.ld-form-note a {
+  color: var(--brand);
+  font-weight: 600;
+  text-decoration: none;
+}
+.ld-form-note a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+  .ld-login-card {
+    padding: 24px;
+  }
+}
