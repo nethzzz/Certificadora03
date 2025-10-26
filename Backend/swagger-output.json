@@ -1,0 +1,528 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Sistema de Gerenciamento de Usuários e Participantes",
+    "description": "API RESTful que gerencia usuários, voluntários e apoiadores com autenticação JWT usando Node.js, Express, MongoDB, bcrypt e dotenv.",
+    "version": "1.0.0"
+  },
+  "host": "localhost:3000",
+  "basePath": "/",
+  "schemes": ["http"],
+  "tags": [
+    {
+      "name": "Auth",
+      "description": "Endpoints de autenticação"
+    },
+    {
+      "name": "Users",
+      "description": "Gerenciamento de usuários"
+    },
+    {
+      "name": "Participants",
+      "description": "Gerenciamento de participantes (voluntários e apoiadores)"
+    }
+  ],
+  "securityDefinitions": {
+    "Bearer": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header",
+      "description": "Token JWT no formato: Bearer {token}"
+    }
+  },
+  "paths": {
+    "/users/login": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Login de usuário",
+        "description": "Realiza autenticação e retorna token JWT",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": ["email", "password"],
+              "properties": {
+                "email": {
+                  "type": "string",
+                  "example": "admin@exemplo.com"
+                },
+                "password": {
+                  "type": "string",
+                  "example": "senhaSegura123"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Login realizado com sucesso",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": { "type": "string" },
+                "token": { "type": "string" },
+                "userId": { "type": "string" },
+                "userType": { "type": "string" }
+              }
+            }
+          },
+          "422": {
+            "description": "Credenciais inválidas"
+          }
+        }
+      }
+    },
+    "/users/checkuser": {
+      "get": {
+        "tags": ["Auth"],
+        "summary": "Verifica usuário autenticado",
+        "description": "Retorna informações do usuário baseado no token JWT",
+        "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Token JWT no formato: Bearer {token}",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Dados do usuário autenticado"
+          },
+          "401": {
+            "description": "Token inválido ou não informado"
+          }
+        }
+      }
+    },
+    "/users/register": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Cadastrar novo usuário (apenas admin)",
+        "description": "Apenas administradores autenticados podem criar novos usuários",
+        "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Token JWT do admin no formato: Bearer {token}",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": ["name", "email", "phone", "birth", "sex", "type", "address", "password", "confirmpassword"],
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "Lucas de Souza"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "lucas@example.com"
+                },
+                "phone": {
+                  "type": "string",
+                  "example": "11999999999"
+                },
+                "birth": {
+                  "type": "string",
+                  "format": "date",
+                  "example": "2000-01-15"
+                },
+                "sex": {
+                  "type": "string",
+                  "enum": ["Masculino", "Feminino", "Outro"],
+                  "example": "Masculino"
+                },
+                "type": {
+                  "type": "string",
+                  "enum": ["admin", "voluntario", "apoiador", "usuario"],
+                  "example": "admin"
+                },
+                "address": {
+                  "type": "string",
+                  "example": "Rua Principal, 1000"
+                },
+                "password": {
+                  "type": "string",
+                  "example": "senhaSegura123"
+                },
+                "confirmpassword": {
+                  "type": "string",
+                  "example": "senhaSegura123"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Usuário criado com sucesso"
+          },
+          "401": {
+            "description": "Token inválido ou não informado"
+          },
+          "403": {
+            "description": "Acesso negado - apenas administradores"
+          },
+          "422": {
+            "description": "Parâmetros inválidos ou e-mail já cadastrado"
+          },
+          "500": {
+            "description": "Erro interno do servidor"
+          }
+        }
+      }
+    },
+    "/users/{id}": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "Buscar usuário por ID",
+        "description": "Retorna os dados de um usuário específico",
+        "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "ID do usuário"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Usuário encontrado"
+          },
+          "401": {
+            "description": "Token inválido"
+          },
+          "422": {
+            "description": "ID inválido ou usuário não encontrado"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Users"],
+        "summary": "Remover usuário por ID",
+        "description": "Remove um usuário (apenas o próprio usuário pode se remover)",
+        "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Usuário removido com sucesso"
+          },
+          "401": {
+            "description": "Token inválido"
+          },
+          "422": {
+            "description": "Permissão negada"
+          },
+          "500": {
+            "description": "Erro interno"
+          }
+        }
+      }
+    },
+    "/users/edit/{id}": {
+      "patch": {
+        "tags": ["Users"],
+        "summary": "Atualizar usuário por ID",
+        "description": "Atualiza dados do usuário (apenas o próprio usuário pode se atualizar)",
+        "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": { "type": "string" },
+                "email": { "type": "string" },
+                "phone": { "type": "string" },
+                "birth": { "type": "string", "format": "date" },
+                "sex": { "type": "string" },
+                "type": { "type": "string" },
+                "address": { "type": "string" },
+                "password": { "type": "string" },
+                "confirmpassword": { "type": "string" }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Usuário atualizado com sucesso"
+          },
+          "401": {
+            "description": "Token inválido"
+          },
+          "422": {
+            "description": "Parâmetros inválidos ou permissão negada"
+          },
+          "500": {
+            "description": "Erro interno"
+          }
+        }
+      }
+    },
+    "/participants": {
+      "post": {
+        "tags": ["Participants"],
+        "summary": "Cadastrar participante (apenas admin)",
+        "description": "Cadastra novo voluntário ou apoiador. Apenas administradores podem criar participantes.",
+        "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": "Token JWT do admin"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": ["name", "email", "phone", "birth", "sex", "type", "address"],
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "Voluntário Exemplo"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "voluntario@example.com"
+                },
+                "phone": {
+                  "type": "string",
+                  "example": "11988887777"
+                },
+                "birth": {
+                  "type": "string",
+                  "format": "date",
+                  "example": "1995-05-20"
+                },
+                "address": {
+                  "type": "string",
+                  "example": "Rua Voluntários, 22"
+                },
+                "sex": {
+                  "type": "string",
+                  "enum": ["Masculino", "Feminino", "Outro"],
+                  "example": "Feminino"
+                },
+                "type": {
+                  "type": "string",
+                  "enum": ["voluntario", "apoiador"],
+                  "example": "voluntario"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Participante cadastrado com sucesso"
+          },
+          "401": {
+            "description": "Token inválido"
+          },
+          "403": {
+            "description": "Acesso negado - apenas administradores"
+          },
+          "422": {
+            "description": "Parâmetros inválidos ou e-mail já cadastrado"
+          },
+          "500": {
+            "description": "Erro interno"
+          }
+        }
+      },
+      "get": {
+        "tags": ["Participants"],
+        "summary": "Listar participantes ativos",
+        "description": "Retorna lista de voluntários e apoiadores. Usuários comuns veem apenas nome, email e tipo. Admins veem todos os dados.",
+        "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de participantes"
+          },
+          "401": {
+            "description": "Token inválido"
+          }
+        }
+      }
+    },
+    "/participants/search": {
+      "get": {
+        "tags": ["Participants"],
+        "summary": "Buscar participantes por nome ou email",
+        "description": "Pesquisa participantes filtrando por nome ou email",
+        "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "q",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "Termo de busca (nome ou email)"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de participantes filtrados"
+          },
+          "400": {
+            "description": "Termo de busca não informado"
+          },
+          "401": {
+            "description": "Token inválido"
+          }
+        }
+      }
+    },
+    "/participants/{id}": {
+      "patch": {
+        "tags": ["Participants"],
+        "summary": "Atualizar participante (apenas admin)",
+        "description": "Atualiza dados de um participante. Apenas administradores.",
+        "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": { "type": "string" },
+                "email": { "type": "string" },
+                "phone": { "type": "string" },
+                "birth": { "type": "string", "format": "date" },
+                "address": { "type": "string" },
+                "sex": { "type": "string" },
+                "type": { "type": "string", "enum": ["voluntario", "apoiador"] }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Participante atualizado"
+          },
+          "401": {
+            "description": "Token inválido"
+          },
+          "403": {
+            "description": "Acesso negado"
+          },
+          "404": {
+            "description": "Participante não encontrado"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Participants"],
+        "summary": "Remover participante (apenas admin)",
+        "description": "Remove um participante do sistema. Apenas administradores.",
+        "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Participante removido com sucesso"
+          },
+          "401": {
+            "description": "Token inválido"
+          },
+          "403": {
+            "description": "Acesso negado"
+          }
+        }
+      }
+    }
+  }
+}

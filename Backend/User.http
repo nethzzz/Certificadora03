@@ -1,0 +1,61 @@
+### Cadastro de usuário (Com todos os campos obrigatórios)
+POST http://localhost:3000/users/register
+Content-Type: application/json
+
+{
+  "name": "Lucas de Souza Pelegrina 2",
+  "email": "lucas.teste02@gmail.com",
+  "phone": "11999999999",
+  "birth": "2000-01-15",
+  "sex": "Masculino",
+  "type": "usuario",
+  "address": "Rua das Flores, 123",
+  "password": "senhaSegura!123",
+  "confirmpassword": "senhaSegura!123"
+}
+
+
+### Login de usuário
+POST http://localhost:3000/users/login
+Content-Type: application/json
+
+{
+  "email": "lucas.teste02@gmail.com",
+  "password": "senhaSegura!123"
+}
+
+
+### Checar usuário autenticado (precisa do token)
+GET http://localhost:3000/users/checkuser
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTHVjYXMgZGUgU291emEgUGVsZWdyaW5hIDIiLCJpZCI6IjY4ZmU4OWE3ZDIwOTUxZjdkZTE0N2IzYyIsInR5cGUiOiJ1c3VhcmlvIiwiaWF0IjoxNzYxNTExOTgxfQ.zzjcfIpT6FjWRd2Keew9dyodAI9aef8Q1n_xFW-aTDg
+
+
+### Buscar detalhes do usuário por ID
+GET http://localhost:3000/users/68fe8966d20951f7de147b38
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTHVjYXMgZGUgU291emEgUGVsZWdyaW5hIDIiLCJpZCI6IjY4ZmU4OWE3ZDIwOTUxZjdkZTE0N2IzYyIsInR5cGUiOiJ1c3VhcmlvIiwiaWF0IjoxNzYxNTExOTgxfQ.zzjcfIpT6FjWRd2Keew9dyodAI9aef8Q1n_xFW-aTDg
+
+
+### Atualizar usuário por ID
+PATCH http://localhost:3000/users/edit/68fe887fd20951f7de147b2e
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTHVjYXMgZGUgU291emEgUGVsZWdyaW5hIDIiLCJpZCI6IjY4ZmU4OWE3ZDIwOTUxZjdkZTE0N2IzYyIsInR5cGUiOiJ1c3VhcmlvIiwiaWF0IjoxNzYxNTExOTgxfQ.zzjcfIpT6FjWRd2Keew9dyodAI9aef8Q1n_xFW-aTDg
+
+{
+  "name": "Lucas Atualizado admin token user",
+  "email": "lucas.teste01@gmail.com",
+  "phone": "11999991111",
+  "birth": "2000-01-15",
+  "sex": "Masculino",
+  "type": "admin",
+  "address": "Rua Nova, 456",
+  "password": "senhaNova!123",
+  "confirmpassword": "senhaNova!123"
+}
+
+
+### Excluir usuário por ID
+DELETE http://localhost:3000/users/68fe887fd20951f7de147b2e
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTHVjYXMgZGUgU291emEgUGVsZWdyaW5hIDIiLCJpZCI6IjY4ZmU4OWE3ZDIwOTUxZjdkZTE0N2IzYyIsInR5cGUiOiJ1c3VhcmlvIiwiaWF0IjoxNzYxNTExOTgxfQ.zzjcfIpT6FjWRd2Keew9dyodAI9aef8Q1n_xFW-aTDg
