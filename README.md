@@ -40,19 +40,25 @@ Após criar a conta e cluster, configure uma string de conexão (URI MongoDB) no
 
 1. **Clone este repositório**
 git clone https://github.com/nethzzz/Certificadora03
-cd Certificadora03
-cd Certificadora_3_backend
 
-2. **Instale as dependências**
+cd Certificadora03
+
+cd backend
+
+3. **Instale as dependências**
 
 npm install
 
 3. **Configure o arquivo `.env`**  
+
 Crie um arquivo `.env` na raiz do projeto com as seguintes variáveis (exemplo):
+
 MONGODB_URI=""
+
 SECRET=""
 
 **Insira manualmente o primeiro usuário admin no banco de dados**  
+
 Gere a senha criptografada usando o bcrypt no terminal Node:
 
 require('bcrypt').hashSync('suaSenhaAdmin', 12)
@@ -71,6 +77,8 @@ type: "admin"
 })
 
 5. **Execute a aplicação**
+
+   npm start
 
 O servidor estará rodando em `http://localhost:3000/`.
 
