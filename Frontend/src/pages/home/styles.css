@@ -31,14 +31,12 @@ body {
   background: var(--bg);
   border-bottom: 1px solid var(--line);
 }
+
 .ld-container {
   max-width: 1120px;
   margin: 0 auto;
   padding: 14px 20px;
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  align-items: center;
-  gap: 16px;
+
 }
 
 .ld-logo {
@@ -193,12 +191,6 @@ body {
   border-top: 1px solid #eee;
 }
 
-.ld-container {
-  max-width: 1120px;
-  margin: 0 auto;
-  padding: 14px 20px;
-}
-
 .ld-header .ld-container {
   display: grid;
   grid-template-columns: auto 1fr auto;
@@ -209,6 +201,14 @@ body {
 .ld-info .ld-container {
   display: block;           
   padding: 32px 20px;   
+}
+
+.ld-about .ld-container,
+.ld-how .ld-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; 
+  gap: 20px;              
 }
 
 .ld-features {
@@ -245,64 +245,30 @@ body {
   margin: 0;
 }
 
-.ld-search {
+.ld-about-content {
   display: flex;
-  gap: 12px;
   align-items: center;
-  margin: 22px 0 8px;
-  flex-wrap: wrap;
-  justify-content: center;
+  justify-content: space-between;
+  gap: 40px;
+
 }
 
-.ld-input {
-  flex: 1 1 520px;
-  height: 54px;
-  padding: 0 16px;
+.ld-about-text {
+
+  line-height: 1.5;
+  text-indent: 2rem;
+}
+
+.ld-about-image img {
+  width: 260px;       
+  height: auto;
   border-radius: 12px;
-  border: 1px solid #e5e7eb;
-  outline: none;
-  font-size: 16px;
-  color: #0f172a;
-  background: #fff;
-  box-shadow: 0 1px 0 rgba(0,0,0,.02) inset;
-}
-.ld-input::placeholder { color: #94a3b8; }
-.ld-input:focus {
-  border-color: #a78bfa;
-  box-shadow: 0 0 0 3px rgba(167,139,250,.25);
-}
-
-.ld-btn.ld-btn-search {
-  height: 54px;
-  padding: 0 22px;
-  border-radius: 12px;
-  border: none;
-  background: #5b21b6;
-  color: #fff;
-  font-weight: 700;
-  cursor: pointer;
-  transition: transform .15s ease, filter .15s ease;
-}
-.ld-btn.ld-btn-search:hover {
-  filter: brightness(1.05);
-  transform: translateY(-1px);
-}
-
-.ld-note {
-  font-size: 14px;
-  color: #6b7280;
-  margin: 6px 2px 0;
+  object-fit: cover;
 }
 
 .ld-how {
   background: #fff;
-}
-
-.ld-section-title {
-  font-size: clamp(22px, 3.6vw, 28px);
-  font-weight: 800;
-  margin: 8px 0 18px;
-  color: #111;
+  margin-top: 30px;
 }
 
 .ld-cards {
@@ -311,7 +277,6 @@ body {
   gap: 28px;
 }
 
-/* Card base */
 .ld-card {
   border: 1px solid #e5e7eb;
   border-radius: 16px;
@@ -324,7 +289,6 @@ body {
   transform: translateY(-2px);
 }
 
-/* Badge */
 .ld-badge {
   display: inline-block;
   font-weight: 700;
@@ -344,13 +308,13 @@ body {
   border: 1px solid rgba(255, 145, 77, .35);
 }
 
-/* Título e textos do card */
 .ld-card-title {
   font-size: 26px;
   font-weight: 800;
   margin: 8px 0 8px;
   color: #111;
-}
+}*/
+
 .ld-card-desc {
   color: #475569;
   font-size: 15px;
@@ -358,7 +322,6 @@ body {
   margin: 0 0 18px;
 }
 
-/* CTA do card */
 .ld-card-btn {
   display: inline-flex;
   align-items: center;
@@ -383,6 +346,76 @@ body {
   color: #fff;
 }
 .ld-card-btn-apoio:hover { filter: brightness(1.05); }
+
+.search .ld-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 18px;
+  padding: 32px 20px;
+}
+
+
+.ld-search {
+  width: 100%;
+  display: flex;
+  flex-direction: column; 
+  align-items: flex-start;
+  gap: 6px;
+  margin: 0;             
+}
+
+
+.ld-search-FORM {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.ld-input {
+  flex: none;
+  width: 100%; 
+  height: 54px;
+  padding: 0 16px;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  outline: none;
+  font-size: 16px;
+  color: #0f172a;
+  background: #fff;
+  box-shadow: 0 1px 0 rgba(0,0,0,.02) inset;
+}
+
+.ld-input::placeholder { color: #94a3b8; }
+
+.ld-input:focus {
+  border-color: #a78bfa;
+  box-shadow: 0 0 0 3px rgba(167,139,250,.25);
+}
+
+.ld-btn.ld-btn-search {
+  height: 54px;
+  padding: 0 22px;
+  border-radius: 12px;
+  border: none;
+  background: #5b21b6;
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform .15s ease, filter .15s ease;
+}
+
+.ld-btn.ld-btn-search:hover {
+  filter: brightness(1.05);
+  transform: translateY(-1px);
+}
+
+.ld-note {
+  font-size: 14px;
+  color: #6b7280;
+  margin: 6px 2px 0;
+}
 
 @media (max-width: 860px) {
   .ld-burger { display: inline-block; }
@@ -409,6 +442,6 @@ body {
 
 @media (max-width: 600px) {
   .ld-features { grid-template-columns: 1fr; }
-  .ld-search { justify-content: stretch; }
+  .ld-item { justify-content: stretch; }
   .ld-btn.ld-btn-search { width: 100%; }
 }

@@ -1,0 +1,53 @@
+### Cadastrar participante (Apenas para admin autenticado)
+POST http://localhost:3000/participants
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTHVjYXMgZGUgU291emEgUGVsZWdyaW5hIiwiaWQiOiI2OGZlODk2NmQyMDk1MWY3ZGUxNDdiMzgiLCJ0eXBlIjoiYWRtaW4iLCJpYXQiOjE3NjE1MTIxNDF9.a1icWe6xM55SPGawkl8dppxkd7zKcjQg8EwVEHrqYZ8
+
+{
+  "name": "Voluntário Teste 3",
+  "email": "voluntario03@test.com",
+  "phone": "11911223344",
+  "birth": "2002-05-20",
+  "address": "Rua Voluntários, 22",
+  "sex": "Feminino",
+  "type": "voluntario"
+}
+
+###
+
+### Listar todos participantes ativos (admin vê todos os dados, usuário comum vê só nome/email/tipo)
+GET http://localhost:3000/participants
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTHVjYXMgZGUgU291emEgUGVsZWdyaW5hIDIiLCJpZCI6IjY4ZmU4OWE3ZDIwOTUxZjdkZTE0N2IzYyIsInR5cGUiOiJ1c3VhcmlvIiwiaWF0IjoxNzYxNTEyMTc0fQ.qqSLluwQFWECLvdj7e_0WdioeILgyBlVNhHHirIcnCI
+
+###
+
+### Buscar participante por nome ou email (consulta pública restrita)
+GET http://localhost:3000/participants/search?q=vo
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTHVjYXMgZGUgU291emEgUGVsZWdyaW5hIDIiLCJpZCI6IjY4ZmU4OWE3ZDIwOTUxZjdkZTE0N2IzYyIsInR5cGUiOiJ1c3VhcmlvIiwiaWF0IjoxNzYxNTEyMTc0fQ.qqSLluwQFWECLvdj7e_0WdioeILgyBlVNhHHirIcnCI
+
+###
+
+### Atualizar participante (Apenas admin)
+PATCH http://localhost:3000/participants/cole_id_aqui
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTHVjYXMgZGUgU291emEgUGVsZWdyaW5hIDIiLCJpZCI6IjY4ZmU4OWE3ZDIwOTUxZjdkZTE0N2IzYyIsInR5cGUiOiJ1c3VhcmlvIiwiaWF0IjoxNzYxNTEyMTc0fQ.qqSLluwQFWECLvdj7e_0WdioeILgyBlVNhHHirIcnCI
+
+{
+  "name": "Voluntário Atualizado",
+  "email": "voluntario01@test.com",
+  "phone": "11933445566",
+  "birth": "2002-06-21",
+  "address": "Rua Novos Voluntários, 55",
+  "sex": "Feminino",
+  "type": "apoiador"
+}
+
+###
+
+### Excluir participante (Apenas admin)
+DELETE http://localhost:3000/participants/cole_id_aqui
+Content-Type: application/json
+Authorization: Bearer seu_token_admin_jwt_aqui
+
