@@ -1,0 +1,144 @@
+.ld-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+
+.ld-modal {
+    background: var(--bg);
+    border-radius: 12px;
+    width: 90%;
+    max-width: 600px;
+    
+    /* 🚨 MUDANÇA 1: Limita a altura do modal a 90% da tela */
+    max-height: 90vh; 
+    
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    animation: fadeIn 0.3s ease-out;
+    display: flex;
+    flex-direction: column; /* Necessário para empilhar header e form */
+}
+
+.ld-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 25px;
+    border-bottom: 1px solid var(--line);
+    /* Garante que o header não scrolle */
+    flex-shrink: 0; 
+}
+
+.ld-modal-header h2 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--brand-strong);
+}
+
+.ld-close-btn {
+    background: transparent;
+    border: none;
+    font-size: 28px;
+    cursor: pointer;
+    color: var(--muted);
+    transition: color 0.2s;
+}
+
+.ld-close-btn:hover {
+    color: var(--text);
+}
+
+.ld-form {
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    
+    /* 🚨 MUDANÇA 2: Permite que APENAS o formulário scrolle se necessário */
+    overflow-y: auto; 
+    flex-grow: 1;
+}
+
+.ld-form label {
+    display: flex;
+    flex-direction: column;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+    width: 100%;
+}
+
+.ld-form-row {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+}
+
+.ld-form-row label {
+    flex: 1;
+}
+
+.ld-full-width {
+    width: 100%;
+}
+
+/* 🚨 MUDANÇA 3: Reduz a altura dos campos para um tamanho mais padrão */
+.ld-form .ld-input {
+    margin-top: 5px;
+    max-height: 40px; /* Reduzido de 48px */
+    border-radius: 8px;
+    padding: 0 12px;
+}
+
+.ld-form select.ld-input {
+    appearance: none;
+}
+
+.ld-form .ld-btn-primary {
+    margin-top: 10px;
+    height: 50px;
+    font-size: 16px;
+    justify-content: center;
+    /* Garante que o botão fique visível se houver scroll */
+    flex-shrink: 0; 
+}
+
+/* Estilos de Alerta */
+.ld-alert {
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+}
+.ld-alert-error {
+    background-color: #fcebeb;
+    color: #cc3333;
+    border: 1px solid #ebcccc;
+}
+.ld-alert-success {
+    background-color: #ebfceb;
+    color: #33cc33;
+    border: 1px solid #ccebcc;
+}
+
+/* Animação */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 500px) {
+    .ld-form-row {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
