@@ -86,6 +86,13 @@
   text-decoration: underline;
 }
 
+.ld-login-helper {
+  font-size: 14px;
+  color: var(--muted);
+  text-align: center;
+  margin: -8px 0 28px; 
+}
+
 @media (max-width: 480px) {
   .ld-login-card {
     padding: 24px;

@@ -5,9 +5,10 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 // Componentes da Aplicação
 import Home from "./pages/home";
-import Login from "./pages/login/login";
 import Layout from "./pages/layout";
+import Login from "./pages/login/login";
 import Register from "./pages/register";
+import ForgotPassword from "./pages/forgotPassword";
 import "./index.css";
 
 // 🔑 Importações do Sistema de Autenticação (Context e Guardião de Rota)
@@ -35,6 +36,18 @@ const router = createBrowserRouter([
         path: "/register",  
         element: <Register />,
       },
+
+      { path: "/esqueci-senha", element: <ForgotPassword /> },
+
+      {
+        path: "/dashboard",
+        element: (
+          <PrivateRoute>
+            <Dashboard />
+          </PrivateRoute>
+        ),
+      },
+
       // 🔒 Exemplo de Rota Protegida com PrivateRoute
       {
         path: "/dashboard", 

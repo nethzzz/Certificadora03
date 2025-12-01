@@ -43,18 +43,6 @@ export default function Register() {
                 required
               />
             </div>
-            
-            <div className="radio-group">
-              <label className="radio-option">
-                <input type="radio" name="opcao" value="voluntario" />
-                Voluntário(a)
-              </label>
-
-              <label className="radio-option">
-                <input type="radio" name="opcao2" value="apoiador" />
-                Apoiador(a)
-              </label>
-            </div>
 
             <button 
               type="submit" 

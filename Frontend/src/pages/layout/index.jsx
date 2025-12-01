@@ -53,10 +53,10 @@ export default function Layout() {
           </Link>
 
           <nav className="ld-nav" aria-label="principal">
-            <a href="/#como-participar">Como participar?</a>
+            <a href="/#info">Valores</a>
             <a href="/#quem-somos">Quem Somos</a>
-            <a href="/#participantes">Participantes</a>
-            <a href="/#apoiadores">Apoiadores</a>
+            <a href="/#como-participar">Como participar?</a>
+            <a href="/#busca">Buscar</a>
           </nav>
 
           <div className="ld-actions">

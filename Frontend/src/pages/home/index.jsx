@@ -1,6 +1,6 @@
 import React from "react";
 import "./styles.css";
-
+import { FaInstagram, FaLinkedin, FaFacebook } from "react-icons/fa";
 
 export default function Home() {
   return (
@@ -24,7 +24,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="ld-info" id="info">
+        <section id="info" className="ld-info" >
           <div className="ld-container">
             <div className="ld-features">
               <article className="ld-feature">
@@ -81,7 +81,7 @@ export default function Home() {
             </div>
         </section>
 
-        <section className="ld-about">
+        <section id="quem-somos" className="ld-about">
           <div className="ld-container">
             <h1>Sobre Nós</h1>
 
@@ -99,7 +99,7 @@ export default function Home() {
           </div>
         </section>
               
-        <section className="ld-how" id="como-participar">
+        <section id="como-participar" className="ld-how" >
           <div className="ld-container">
             <h1>Como participar</h1>
 
@@ -111,6 +111,7 @@ export default function Home() {
                   Candidate-se para colaborar em projetos e atividades do programa,
                   contribuindo com suas habilidades e aprendizados.
                 </p>
+                <p className="ld-card-desc" >É necessário ser estudante da UTFPR-CP para tornar-se voluntário</p>
                 <a href="#quero-voluntariar" className="ld-card-btn ld-card-btn-vol">Quero voluntariar</a>
               </article>
 
@@ -118,16 +119,17 @@ export default function Home() {
                 <span className="ld-badge ld-badge-apoio">Apoiar</span>
                 <h3 className="ld-card-title">Apoiar</h3>
                 <p className="ld-card-desc">
-                  Contribua financeiramente ou com recursos para viabilizar iniciativas
-                  e ampliar o impacto do projeto.
+                  Contribua financeiramente ou com recursos para viabilizar iniciativas, ampliar o impacto do projeto 
+                  e ajudar a manter nossas ações em expansão.
                 </p>
+                <p className="ld-card-desc">Não é necessário ser estudante da UTFPR-CP para apoiar o projeto</p>
                 <a href="#quero-apoiar" className="ld-card-btn ld-card-btn-apoio">Quero apoiar</a>
               </article>
             </div>
           </div>
         </section>
 
-        <section className="search" id="buscar">
+        <section id="busca" className="search" >
           <div className="ld-container">
             <h1>Buscar voluntários e apoiadores</h1>
               
@@ -147,6 +149,62 @@ export default function Home() {
           </div>
         </section>
       </main>
+
+      <footer className ="ld-footer">
+        <div className="ld-footer-grid">
+          <div className="ld-footer-left">
+            <h3>Entre em contato com a gente!</h3>
+
+            <form className="ld-footer-form">
+              <input type="text" placeholder="Nome" />
+              <input type="email" placeholder="E-mail" />
+              <textarea placeholder="Sua mensagem"></textarea>
+              <button type="submit">Enviar</button>
+            </form>
+          </div>
+
+          <div className="ld-footer-right">
+            <div>
+              <p className="ld-footer-label">Nosso e-mail</p>
+              <p className="ld-footer-info">meninasdigitaisutfprcp@gmail.com</p>
+            </div>
+
+            <div>
+              <p className="ld-footer-label">Nossas redes sociais</p>
+
+              <div className="ld-footer-social">
+                <a
+                  href="https://www.instagram.com/meninasdigitaisutfprcp/"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <FaInstagram />
+                </a>
+
+                <a
+                  href="https://www.linkedin.com/company/meninas-digitais-utfpr-cp/"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <FaLinkedin />
+                </a>
+
+                <a
+                  href="https://www.facebook.com/people/Meninas-Digitais-UTFPR-CP/61552155907224/"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <FaFacebook />
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div className="ld-footer-bottom">
+          <p>© {new Date().getFullYear()} Meninas Digitais – UTFPR-CP</p>
+        </div>
+      </footer>
     </>
   );
 }

@@ -3,7 +3,7 @@ import React, { useState } from "react";
 // Importamos o hook de autenticação
 import { useAuth } from '../../context/AuthContext.jsx'; 
 // Assumindo que você usa react-router-dom
-import { useNavigate } from 'react-router-dom'; 
+import { useNavigate, Link } from 'react-router-dom'; 
 import "../home/styles.css";  
 import "./login.css";  
 
@@ -98,7 +98,10 @@ export default function Login() {
               />
             </div>
 
-            <a href="/recuperar-senha" className="ld-form-link">Esqueceu sua senha?</a>
+            <Link to="/esqueci-senha" className="ld-form-link">
+              Esqueceu sua senha?
+            </Link>
+            {/*<a href="/recuperar-senha" className="ld-form-link">Esqueceu sua senha?</a>*/}
 
             {/* Botão de Login */}
             <button 
