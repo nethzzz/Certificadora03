@@ -388,14 +388,6 @@
         "summary": "Listar participantes ativos",
         "description": "Retorna lista de voluntários e apoiadores. Usuários comuns veem apenas nome, email e tipo. Admins veem todos os dados.",
         "security": [{ "Bearer": [] }],
-        "parameters": [
-          {
-            "name": "Authorization",
-            "in": "header",
-            "required": true,
-            "type": "string"
-          }
-        ],
         "responses": {
           "200": {
             "description": "Lista de participantes"
