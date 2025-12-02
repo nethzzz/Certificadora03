@@ -1,21 +1,17 @@
-// src/pages/Dashboard.js
 import React, { useEffect, useState, useCallback } from 'react';
 import { useApiClient } from '../../services/api.jsx';
-import ParticipantFormModal from '../../components/ParticipantFormModal'; // 💡 Importar o Modal
+import ParticipantFormModal from '../../components/ParticipantFormModal';
 import './dashboard.css';
 import { FaSearch, FaPlus, FaEdit, FaTrash } from 'react-icons/fa'; 
 import UserFormModal from '../../components/UserFormModal.jsx';
 
-// Função auxiliar para formatar a data (mantida)
 const formatDate = (dateString) => {
     if (!dateString) return 'N/A';
     const date = new Date(dateString);
-    // Adiciona 1 dia para corrigir o fuso horário (comum em datas do MongoDB)
     date.setDate(date.getDate() + 1); 
     return date.toLocaleDateString('pt-BR');
 };
 
-// Componente de Linha da Tabela (mantido e preparado para ações)
 const Participant = ({ _id, name, email, userType, phone, birth, sex, address, onEdit, onDelete }) => (
     <tr className="ld-table-row">
         <td>{name}</td>
@@ -50,11 +46,9 @@ export default function Dashboard() {
     const [searchTerm, setSearchTerm] = useState('');
     const [isUserModalOpen, setIsUserModalOpen] = useState(false);
     
-    // 💡 NOVOS ESTADOS PARA O MODAL
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [editingParticipant, setEditingParticipant] = useState(null); // Dados do participante sendo editado
+    const [editingParticipant, setEditingParticipant] = useState(null);
 
-    // Função de recarga dos participantes (estabilizada com useCallback)
     const fetchParticipants = useCallback(async () => {
         setLoading(true);
         setError(null);
@@ -75,7 +69,6 @@ export default function Dashboard() {
         }
     }, [get, search, searchTerm]);
     
-    // Dispara a busca/recarrega quando searchTerm ou as funções da API mudam (tratando debounce)
     useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
         fetchParticipants();
@@ -85,22 +78,20 @@ export default function Dashboard() {
     
 }, [searchTerm, fetchParticipants]);
 
-    // --- Handlers do Modal ---
-
     const handleOpenRegisterModal = () => {
-        setEditingParticipant(null); // Modo Cadastro
+        setEditingParticipant(null);
         setIsModalOpen(true);
     };
 
     const handleOpenEditModal = (id) => {
         const participantToEdit = participants.find(p => p._id === id);
-        setEditingParticipant(participantToEdit); // Modo Edição
+        setEditingParticipant(participantToEdit);
         setIsModalOpen(true);
     };
 
     const handleCloseModal = () => {
         setIsModalOpen(false);
-        setEditingParticipant(null); // Limpa o estado após fechar
+        setEditingParticipant(null);
     };
 
     const handleOpenUserModal = () => setIsUserModalOpen(true);
@@ -109,26 +100,16 @@ export default function Dashboard() {
 
     const handleUserSaved = () => {
         console.log("Novo usuário Admin cadastrado com sucesso!");
-        // Não precisa recarregar a lista de participantes, pois o novo usuário é um Admin, não um Participante.
     };
 
     const handleParticipantSaved = (savedParticipant) => {
-    // 🚨 Ação corrigida: NÃO TENTA MANIPULAR O ESTADO LOCALMENTE.
-    // Apenas forçamos o recarregamento da lista completa do servidor.
-    
-    // Opcional: Se a busca estiver ativa, limpamos ela para ver o novo participante
     if (searchTerm) {
-        setSearchTerm(''); // Limpa a busca para exibir o novo item na lista principal
+        setSearchTerm('');
     }
     
-    // 🔑 Força o useEffect a rodar novamente, chamando a fetchParticipants()
-    // Isso garante que os dados da API (que agora tem o item novo) sejam carregados.
     fetchParticipants(); 
 };
 
-    // --- Handlers de Exclusão ---
-    
-    // Substituímos o handleEdit antigo pela chamada do modal
     const handleEdit = handleOpenEditModal;
 
     const handleDelete = async (id, name) => {
@@ -137,7 +118,6 @@ export default function Dashboard() {
                 setLoading(true);
                 await remove(id);
                 
-                // Remove o participante do estado local para atualização rápida
                 setParticipants(participants.filter(p => p._id !== id));
                 alert(`Participante ${name} removido com sucesso.`);
 
@@ -149,7 +129,6 @@ export default function Dashboard() {
         }
     };
     
-    // --- Renderização Condicional (Loading/Error) ---
 
     if (loading) {
         return (
@@ -177,7 +156,6 @@ export default function Dashboard() {
                 <div className="ld-container">
                     <h1 className="ld-dashboard-title">Lista de Participantes Ativos</h1>
                     
-                    {/* CONTROLES DE BUSCA E CADASTRO */}
                     <div className="ld-dashboard-controls">
                         <div className="ld-search-bar">
                             <FaSearch className="ld-search-icon" />
@@ -199,7 +177,6 @@ export default function Dashboard() {
                     </div>
                     <h2>Nenhum participante encontrado para o termo "{searchTerm}".</h2>
                 </div>
-                 {/* INTEGRAÇÃO DO MODAL (necessário para o botão de cadastro funcionar) */}
                 <ParticipantFormModal
                     isOpen={isModalOpen}
                     onClose={handleCloseModal}
@@ -210,24 +187,21 @@ export default function Dashboard() {
         );
     }
     
-    // --- Renderização Principal da Tabela ---
     return (
         <main className="ld-dashboard-main">
             <div className="ld-container">
                 <h1 className="ld-dashboard-title">Lista de Participantes Ativos ({participants.length})</h1>
 
-                {/* 🔑 NOVOS CONTROLES DE AÇÃO */}
                 <div className="ld-dashboard-controls ld-dashboard-actions">
                     <button 
                         className="ld-btn ld-btn-search ld-btn-secondary" 
                         onClick={handleOpenUserModal}
-                        style={{ background: '#f0f0f0', color: '#111' }} // Estilo secundário para diferenciar
+                        style={{ background: '#f0f0f0', color: '#111' }}
                     >
                         <FaPlus /> Cadastrar Novo Usuário
                     </button>
                 </div>
                 
-                {/* CONTROLES DE BUSCA E CADASTRO */}
                 <div className="ld-dashboard-controls">
                     <div className="ld-search-bar">
                         <FaSearch className="ld-search-icon" />
@@ -278,7 +252,6 @@ export default function Dashboard() {
 
             </div>
             
-            {/* 💡 INTEGRAÇÃO DO MODAL */}
             <ParticipantFormModal
                 isOpen={isModalOpen}
                 onClose={handleCloseModal}

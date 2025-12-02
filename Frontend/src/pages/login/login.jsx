@@ -1,27 +1,21 @@
-// src/pages/Login.js
 import React, { useState } from "react";
-// Importamos o hook de autenticação
 import { useAuth } from '../../context/AuthContext.jsx'; 
-// Assumindo que você usa react-router-dom
 import { useNavigate, Link } from 'react-router-dom'; 
 import "../home/styles.css";  
 import "./login.css";  
 
 export default function Login() {
-  // Usamos o hook do AuthContext
   const { login, isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
-  // State para os inputs e mensagens
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  // Se o usuário já estiver autenticado, redireciona imediatamente
   if (isAuthenticated) {
     navigate('/');
-    return null; // Não renderiza o formulário de login
+    return null;
   }
 
   const handleLoginSubmit = async (e) => {
@@ -30,14 +24,11 @@ export default function Login() {
     setLoading(true);
 
     try {
-      // Chama a função de login do Contexto
       const result = await login(email, password);
 
       if (result.success) {
-        // Redireciona após o login bem-sucedido (aqui ou dentro do AuthContext)
         navigate('/'); 
       } else {
-        // Exibe o erro retornado pelo Contexto
         setError(result.error);
       }
     } catch (err) {
@@ -56,7 +47,6 @@ export default function Login() {
           
           <form className="ld-login-form" onSubmit={handleLoginSubmit}>
             
-            {/* Mensagem de Erro */}
             {error && 
               <div style={{ 
                 padding: '10px', 
@@ -101,9 +91,7 @@ export default function Login() {
             <Link to="/esqueci-senha" className="ld-form-link">
               Esqueceu sua senha?
             </Link>
-            {/*<a href="/recuperar-senha" className="ld-form-link">Esqueceu sua senha?</a>*/}
 
-            {/* Botão de Login */}
             <button 
               type="submit" 
               className="ld-btn ld-btn-search ld-btn-login" 

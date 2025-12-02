@@ -1,7 +1,6 @@
-// src/components/UserFormModal.js
 import React, { useState } from 'react';
 import { useApiClient } from '../services/api.jsx';
-import './ParticipantFormModal.css'; // Reutilizando os estilos do modal
+import './ParticipantFormModal.css';
 
 const INITIAL_STATE = {
     name: '',
@@ -9,7 +8,7 @@ const INITIAL_STATE = {
     phone: '',
     birth: '',
     sex: 'Masculino',
-    type: 'admin', // Assumindo que o formulário é para criar ADMINS ou o tipo será passado.
+    type: 'admin',
     address: '',
     password: '',
     confirmpassword: '',
@@ -42,11 +41,10 @@ export default function UserFormModal({ isOpen, onClose, onUserSaved }) {
         }
 
         try {
-            // 🔑 Chamada à nova função registerUser
             await registerUser(formData);
             
             setSuccessMessage('Novo usuário cadastrado com sucesso!');
-            setFormData(INITIAL_STATE); // Limpa o formulário
+            setFormData(INITIAL_STATE);
             
             if (onUserSaved) {
                 onUserSaved();
