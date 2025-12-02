@@ -1,8 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import "./styles.css";
 import { FaInstagram, FaLinkedin, FaFacebook } from "react-icons/fa";
+import SupportModal from "../../components/SuportModal";
 
 export default function Home() {
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = (e) => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <>
       <main>
@@ -18,7 +30,13 @@ export default function Home() {
             </p>
 
             <div className="ld-cta">
-              <a className="ld-cta-support" href="#participar">Quero apoiar/voluntariar</a>
+              <a  
+                className="ld-cta-support" 
+                href="#participar" 
+                onClick={openModal} 
+              >
+                Quero apoiar/voluntariar
+              </a>
               <a className="ld-cta-participants" href="#apoiar">Ver participantes</a>
             </div>
           </div>
@@ -112,7 +130,7 @@ export default function Home() {
                   contribuindo com suas habilidades e aprendizados.
                 </p>
                 <p className="ld-card-desc" >É necessário ser estudante da UTFPR-CP para tornar-se voluntário</p>
-                <a href="#quero-voluntariar" className="ld-card-btn ld-card-btn-vol">Quero voluntariar</a>
+                <a href="#quero-voluntariar" className="ld-card-btn ld-card-btn-vol" onClick={openModal}>Quero voluntariar</a>
               </article>
 
               <article className="ld-card">
@@ -123,7 +141,7 @@ export default function Home() {
                   e ajudar a manter nossas ações em expansão.
                 </p>
                 <p className="ld-card-desc">Não é necessário ser estudante da UTFPR-CP para apoiar o projeto</p>
-                <a href="#quero-apoiar" className="ld-card-btn ld-card-btn-apoio">Quero apoiar</a>
+                <a href="#quero-apoiar" className="ld-card-btn ld-card-btn-apoio" onClick={openModal}>Quero apoiar</a>
               </article>
             </div>
           </div>
@@ -205,6 +223,10 @@ export default function Home() {
           <p>© {new Date().getFullYear()} Meninas Digitais – UTFPR-CP</p>
         </div>
       </footer>
+      <SupportModal 
+        isOpen={isModalOpen} 
+        onClose={closeModal} 
+      />
     </>
   );
 }

@@ -1,17 +1,16 @@
-// src/components/ParticipantFormModal.js
 import React, { useState, useEffect } from 'react';
 import { useApiClient } from '../services/api.jsx';
-import './ParticipantFormModal.css'; // Novo arquivo CSS
+import './ParticipantFormModal.css';
 
-// Estado inicial para o formulário (limpo)
+
 const INITIAL_STATE = {
     name: '',
     email: '',
     phone: '',
     birth: '',
     address: '',
-    sex: 'Feminino', // Valor padrão
-    type: 'voluntario' // Valor padrão
+    sex: 'Feminino',
+    type: 'voluntario'
 };
 
 export default function ParticipantFormModal({ isOpen, onClose, initialData = null, onParticipantSaved }) {
@@ -20,15 +19,11 @@ export default function ParticipantFormModal({ isOpen, onClose, initialData = nu
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [successMessage, setSuccessMessage] = useState(null);
-
-    // Determina se estamos no modo de Edição ou Criação
     const isEditMode = !!initialData?._id;
     const formTitle = isEditMode ? 'Editar Participante' : 'Cadastrar Novo Participante';
 
-    // Efeito para carregar os dados iniciais ao entrar no modo de edição
     useEffect(() => {
         if (isEditMode) {
-            // Formata a data de volta para o formato YYYY-MM-DD para o campo input
             const birthDate = initialData.birth ? new Date(initialData.birth).toISOString().split('T')[0] : '';
             setFormData({
                 ...initialData,
@@ -54,7 +49,6 @@ export default function ParticipantFormModal({ isOpen, onClose, initialData = nu
         setError(null);
         setSuccessMessage(null);
 
-        // Validação básica
         if (!formData.name || !formData.email || !formData.type) {
             setError("Os campos Nome, Email e Tipo são obrigatórios.");
             setLoading(false);
@@ -63,7 +57,6 @@ export default function ParticipantFormModal({ isOpen, onClose, initialData = nu
 
         try {
             let result;
-            // 🔑 Se for edição, chama o PATCH; se for criação, chama o POST
             if (isEditMode) {
                 result = await update(initialData._id, formData);
             } else {
@@ -73,17 +66,14 @@ export default function ParticipantFormModal({ isOpen, onClose, initialData = nu
             const message = isEditMode ? 'Participante atualizado com sucesso!' : 'Participante cadastrado com sucesso!';
             setSuccessMessage(message);
 
-            // Chama o callback no Dashboard para atualizar a lista
             if (onParticipantSaved) {
                 onParticipantSaved(result);
             }
             
-            // Limpa o formulário após a criação
             if (!isEditMode) {
                 setFormData(INITIAL_STATE);
             }
 
-            // Opcional: Fechar o modal após um pequeno delay
             setTimeout(onClose, 1500);
 
         } catch (err) {
@@ -129,7 +119,7 @@ export default function ParticipantFormModal({ isOpen, onClose, initialData = nu
                                 onChange={handleChange} 
                                 required
                                 className="ld-input"
-                                disabled={isEditMode} // Não permite alterar o email na edição
+                                disabled={isEditMode}
                             />
                         </label>
                     </div>
